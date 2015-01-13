@@ -20,12 +20,18 @@ class Users{
 	***************/
 
 	public function check_db_tables(){
-		$query = $this->db->prepare("SELECT 1 FROM `nw_users` LIMIT 1");
+		$query = $this->db->prepare("SELECT * FROM `nw_users`");
 
 		try{
 			$query->execute();
-
-			return true;
+			$check = $query->fetch();
+			if($check == ""){
+				return false;
+			}
+			else{
+				return true;	
+			}
+			
 
 		}catch(PDOException $e){
 			return false;
@@ -57,30 +63,10 @@ class Users{
 		     $this->db->exec($sql);
 
 		} catch(PDOException $e) {
-		    echo $e->getMessage();//Remove or change message in production code
+		    die($e->getMessage());//Remove or change message in production code
 		}
 
-		$table = "nw_users";
-		try {
-		     $this->db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );//Error Handling
-		     $sql ="CREATE table $table(
-		     ID INT( 11 ) AUTO_INCREMENT PRIMARY KEY,
-		     user_login VARCHAR( 50 ) NOT NULL, 
-		     user_pass VARCHAR( 250 ) NOT NULL,
-		     user_nickname VARCHAR( 150 ) NOT NULL, 
-		     user_email VARCHAR( 150 ) NOT NULL,
-		     user_registred date NOT NULL, 
-		     user_status INT( 11 ) NOT NULL,
-		     display_name VARCHAR( 50 ) NOT NULL);" ;
-		     $this->db->exec($sql);
-
-		} catch(PDOException $e) {
-		    echo $e->getMessage();//Remove or change message in production code
-		}
 	}
-
-
-
 
 
 	/***************
@@ -170,7 +156,7 @@ class Users{
 	//loging in the user
 	//Loggin User
 	public function login($email, $password){
-		$query = $this->db->prepare("SELECT `password`, `id` FROM `members` WHERE `email` = ?");
+		$query = $this->db->prepare("SELECT `user_pass`, `id` FROM `nw_users` WHERE `user_login` = ?");
 		$query->bindValue(1, $email);
 
 		try{

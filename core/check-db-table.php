@@ -1,13 +1,18 @@
 <?php
 require('init.php');
 
+$return = array();
 
 $check_table = $dbHandler->check_db_tables();
 
-echo $check_table;
 if($check_table === true){
-	
+	$return[1] = true;
+
+	echo json_encode($return);
 }else if($check_table === false){
-	$create_tables = $dbHandler->instal_db_tables();
+	$return[1] = false;
+
+	echo json_encode($return);
+	//$create_tables = $dbHandler->instal_db_tables();
 }
 ?>

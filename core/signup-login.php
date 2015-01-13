@@ -5,8 +5,8 @@ $function_to_run = $_POST['function_to_run'];
 *Initiate a switch to select the right function
 *************/
 switch($function_to_run){
-	case "registration":
-	registrerUser();
+	case "setup_admin_user_first":
+	setup_admin_user_first();
 	break;
 	case "login":
 	loginUser();
@@ -17,7 +17,7 @@ switch($function_to_run){
 /************
 *function for registrer user
 ************/
-function registrerUser(){
+function setup_admin_user_first(){
 	require '../core/init.php';
 	$return = array();
 
@@ -31,9 +31,9 @@ function registrerUser(){
 	}else{
 		if(filter_var($email, FILTER_VALIDATE_EMAIL) === false){
 			$errors[] = 'Epostadressen er ikke gyldig';
-		}else if($users->email_exists($email) === true){
+		}else if($dbHandler->email_exists($email) === true){
 			$errors[] = 'Epostadressen er allerede registrert';
-		}else if($users->name_exists($nickname) === true){
+		}else if($dbHandler->name_exists($nickname) === true){
 			$errors[] = 'Kallenavnet er allerede registrert, vennligst bruk et annet';
 		}
 	}
@@ -41,7 +41,7 @@ function registrerUser(){
 	if(empty($errors) === true){
 		
 		
-		$users->register($nickname, $email, $password);
+		$dbHandler->register($nickname, $email, $password);
 		
 		$return[1] = true; $return[2] = "Du er nå registrert";
 		echo json_encode($return);
@@ -71,13 +71,13 @@ function loginUser(){
 	require '../core/init.php';
 	$return = array();
 
-	$email = trim($_POST['email']);
-	$password = trim($_POST['password']);
+	$username = trim($_POST['input_user_login']);
+	$password = trim($_POST['input_user_password']);
 
-	if(empty($email) === true || empty($password) === true){
+	if(empty($username) === true || empty($password) === true){
 			$errors[] = 'Vennligst fyll inn brukernavn og passord';
 	}else{
-		$login = $users->login($email, $password);
+		$login = $dbHandler->login($username, $password);
 		if($login === false){ 
 		
 			$return = false;
@@ -86,44 +86,6 @@ function loginUser(){
 		}else{
 		
 			$id = $_SESSION['id'] = $login;
-
-			if($check_bank = $bank->check_bank($login) === true){
-
-			}else{
-				$insert_gold = $bank->insert_gold_login($login);
-			}
-
-			if($check_army = $army->check_army($login) === true){
-
-			}else{
-
-				//Set 3 heros for 
-
-				//Hero 1
-				$hero1Name 		= "Nathil";
-				$hero1special 	= "Nature";
-				$hero1picture	= "img/heros/hero-Nathil.jpg";
-				$drag1ID		= "hero-1-drag";
-
-				$Hero1 = $army->insert_army_login($login, $hero1Name, $hero1special, $hero1picture, $drag1ID);
-
-				//Hero 2
-				$hero2Name 		= "Brasko";
-				$hero2special 	= "Stone";
-				$hero2picture	= "img/heros/hero-Brasko.jpg";
-				$drag2ID		= "hero-2-drag";
-
-				$Hero2 = $army->insert_army_login($login, $hero2Name, $hero2special, $hero2picture, $drag2ID);
-
-				//Hero 3
-				$hero3Name 		= "Thalin";
-				$hero3special 	= "Light";
-				$hero3picture	= "img/heros/hero-Thalin.jpg";
-				$drag3ID		= "hero-3-drag";
-
-				$Hero3 = $army->insert_army_login($login, $hero3Name, $hero3special, $hero3picture, $drag3ID);
-			}
-
 			
 			$success = true;
 			

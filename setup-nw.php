@@ -1,22 +1,8 @@
-<?php
-require('core/init.php');
-
-$return = array();
-
-$check_table = $dbHandler->check_db_tables();
-
-if($check_table === true){
-    
-}else if($check_table === false){
-    header('Location: setup-nw.php');
-    //$create_tables = $dbHandler->instal_db_tables();
-}
-?>
 <!DOCTYPE html>
 <html class="bg-black">
     <head>
         <meta charset="UTF-8">
-        <title>AdminLTE | Log in</title>
+        <title>AdminLTE | Registration Page</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -33,31 +19,37 @@ if($check_table === true){
     <body class="bg-black">
 
         <div class="form-box" id="login-box">
-            <div class="header">Sign In</div>
-            <form action="" method="post">
+            <div class="header">Setup new account</div>
+            <form action="core/signup-login.php" method="post">
                 <div class="body bg-gray">
                     <div class="form-group">
-                        <input type="text" id="input_user_login" name="userid" class="form-control" placeholder="User ID"/>
+                        <input type="text" id="setup_full_name_reg" name="name" class="form-control" placeholder="Full name"/>
                     </div>
                     <div class="form-group">
-                        <input type="password" id="input_user_password" name="password" class="form-control" placeholder="Password"/>
+                        <input type="text" id="setup_user_name_reg" name="userid" class="form-control" placeholder="Username"/>
                     </div>
                     <div class="form-group">
-                        <input type="checkbox" name="remember_me"/> Remember me
-                        <div id="responseLog"></div>
+                        <input type="email" id="setup_user_email_reg" name="setup_user_email_reg" class="form-control" placeholder="Email"/>
                     </div>
+                    <div class="form-group">
+                        <input type="password" id="setup_user_password" name="password" class="form-control" placeholder="Password"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="setup_user_password2" name="password2" class="form-control" placeholder="Retype password"/>
+                    </div>
+                    <div class="form-group">
+                        <div id="responseReg"></div>
+                    </div>
+
                 </div>
                 <div class="footer">
-                    <button type="submit" id="login-button" class="btn bg-olive btn-block">Sign me in</button>
 
-                    <p><a href="#">I forgot my password</a></p>
+                    <button type="submit" id="setup_reg_admin_user" class="btn bg-olive btn-block">Start NetWrap</button>
 
-                    <a href="register.html" class="text-center">Register a new membership</a>
                 </div>
             </form>
-            
+
             <div class="margin text-center">
-               
             </div>
         </div>
 
