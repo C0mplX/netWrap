@@ -117,7 +117,9 @@ $(document).ready(function(){
 						$('.fa-spinner').remove();
 						$('#responseReg').html(data[2]).fadeIn('fast');
 
+						window.location.replace('index.php');
 						setTimeout("$('input, select').val('')",2000);
+
 
 					}
 				},

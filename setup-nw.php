@@ -1,3 +1,17 @@
+<?php
+require('core/init.php');
+
+$return = array();
+
+$check_table = $dbHandler->check_db_tables();
+
+if($check_table === true){
+    header('Location: index.php');
+}else if($check_table === false){
+    header('Location: setup-nw.php');
+    //$create_tables = $dbHandler->instal_db_tables();
+}
+?>
 <!DOCTYPE html>
 <html class="bg-black">
     <head>
