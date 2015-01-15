@@ -26,3 +26,8 @@ There are three levels in Netwrap.
 	- Administrator = userlevel 3
 	- Editor 	= userlevel 2
 	- Poster 	= userlevel 1
+
+You can change the seccound parameter to match the meta_key you want to retrive
+	Meta keys are: 
+	- nw_user_level = userlevel
+	- 

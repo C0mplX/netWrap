@@ -101,10 +101,10 @@ $user_ID = $_SESSION['id'];
                                 <!-- Menu Body -->
                                 <li class="user-body">
                                     <div class="col-xs-4 text-center">
-                                        <a href="#"></a>
+                                        <a href="#">Options</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">options </a>
+                                        <a href="nw_codec.text">Codec</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
                                         <a href="#"></a>
