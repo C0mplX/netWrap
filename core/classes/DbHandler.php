@@ -295,5 +295,52 @@ class DbHandler{
 		}
 	}
 
+
+	/***************
+	*
+	* Methods to retrive data from the nw_user table 
+	*
+	***************/
+	public function get_userdata_admin($id){
+		$query = $this->db->prepare("SELECT * FROM `nw_users` WHERE `ID`= ?");
+		$query->bindValue(1, $id);
+
+		try{
+			$query->execute();
+			$data 				= $query->fetch();
+
+			return $data;
+
+		}catch(PDOException $e){
+			die($e ->getMessage());
+		}
+	}
+
+
+
+
+	/***************
+	*
+	* Methods to retrive data from the nw_usermeta table 
+	*
+	***************/
+	public function get_usermeta_admin($id, $meta_key){
+		$query = $this->db->prepare("SELECT * FROM `nw_usermeta` WHERE `user_id`= ? AND `meta_key` = ?");
+		$query->bindValue(1, $id);
+		$query->bindValue(2, $meta_key);
+
+		try{
+			$query->execute();
+			$data 				= $query->fetch();
+
+			return $data;
+
+		}catch(PDOException $e){
+			die($e ->getMessage());
+		}
+	}
+
+
+
 }
 ?>

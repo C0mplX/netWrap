@@ -8,7 +8,7 @@ class General{
 
 	public function logged_in_protect(){
 		if($this->logged_in() === true) {
-				header("Location: main.php");
+				header("Location: nw-main-admin.php");
 				exit();
 		}
 	}

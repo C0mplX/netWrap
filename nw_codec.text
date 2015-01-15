@@ -1,0 +1,28 @@
+NetWrap Codec
+
+Functions: 
+
+<!--get_user function-->
+
+The get_user() function retrives the display Name from the nw_users table.
+
+EXANPLE:
+
+<?php echo get_user($user_ID);?>
+the example over wil display somthing like this: John Doe.
+
+
+<!--get_usermeta function-->
+
+The get_usermeta() function retrives the meta_value from the nw_usermeta table. 
+
+Pass the following values into the function get_usermeta('user_id', 'meta_key').
+EXAMPLE: 
+
+<?php echo get_usermeta($user_ID, 'nw_user_level');?>
+The example abov wil return the user level of the user id you pass into the function. 
+
+There are three levels in Netwrap. 
+	- Administrator = userlevel 3
+	- Editor 	= userlevel 2
+	- Poster 	= userlevel 1

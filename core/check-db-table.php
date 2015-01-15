@@ -13,6 +13,6 @@ if($check_table === true){
 	$return[1] = false;
 
 	echo json_encode($return);
-	//$create_tables = $dbHandler->instal_db_tables();
+	$create_tables = $dbHandler->instal_db_tables();
 }
 ?>

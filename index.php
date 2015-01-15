@@ -1,5 +1,6 @@
 <?php
 require('core/init.php');
+$general->logged_in_protect();  
 
 $return = array();
 
