@@ -6,7 +6,7 @@ Functions:
 
 The get_user() function retrives the display Name from the nw_users table.
 
-EXANPLE:
+EXAMPLE:
 
 <?php echo get_user($user_ID);?>
 the example over wil display somthing like this: John Doe.
@@ -16,11 +16,12 @@ the example over wil display somthing like this: John Doe.
 
 The get_usermeta() function retrives the meta_value from the nw_usermeta table. 
 
-Pass the following values into the function get_usermeta('user_id', 'meta_key').
+Pass the following values into the function: get_usermeta('user_id', 'meta_key').
+
 EXAMPLE: 
 
 <?php echo get_usermeta($user_ID, 'nw_user_level');?>
-The example abov wil return the user level of the user id you pass into the function. 
+The example above wil return the user level of the user id you pass into the function. 
 
 There are three levels in Netwrap. 
 	- Administrator = userlevel 3
@@ -31,3 +32,23 @@ You can change the seccound parameter to match the meta_key you want to retrive
 	Meta keys are: 
 	- nw_user_level = userlevel
 	- 
+
+<!--
+-
+- Functions to create elements
+-
+--!>
+
+<!--add_editor()-->
+
+The add_editor returns a fully functional tinyMCEditor. 
+
+Pass the following values into the function: add_editor('editor_id', 'editor_name')
+Both editor_id and editor_name needs to be unique, so using a slug or prefix is highly recommended.
+
+EXAMPLE:
+
+<?php echo add_editor('my_editor_id', 'my_editor_name');?>
+
+The exsample above will out put a TinyMCEditor with the id 'editor_id', and form control name 'editor_name'. 
+To get the output of the form simply call the for with javascript on the editor_id you selected, or by calling it with $_POST['editor_id']. 

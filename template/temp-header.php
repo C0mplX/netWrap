@@ -147,32 +147,47 @@ $user_ID = $_SESSION['id'];
                             <a href="nw-main-admin.php">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
+
                         </li>
-                        <li>
-                            <a href="nw-pages/posts.php">
+                        <li class="treeview">
+                            <a href="#">
                                 <i class="fa fa-pencil"></i> <span>Posts</span>
                             </a>
+                            <ul class="treeview-menu">
+                                <li><a href="nw-pages/new-post.php"><i class="fa fa-plus"></i> New Poost</a></li>
+                                <li><a href="nw-pages/edit-post.php"><i class="fa fa-edit"></i> Edit posts</a></li>
+                            </ul>
                         </li>
-                        <li>
-                            <a href="nw-pages/media.php">
+                        <li class="treeview">
+                            <a href="#">
                                 <i class="fa fa-camera"></i> <span>Media</span>
                             </a>
+                            <ul class="treeview-menu">
+                                <li><a href="nw-pages/upload-media.php"><i class="fa fa-plus"></i> Upload images</a></li>
+                                <li><a href="nw-pages/edit-media.php"><i class="fa fa-edit"></i> Edit images</a></li>
+                            </ul>
                         </li>
-                        <li>
+                        <li class="treeview">
                             <a href="nw-pages/pages.php">
                                 <i class="fa fa-file"></i> <span>Pages</span>
                             </a>
+                            <ul class="treeview-menu">
+                                <li><a href="nw-pages/new-page.php"><i class="fa fa-plus"></i> New page</a></li>
+                                <li><a href="nw-pages/edit-page.php"><i class="fa fa-edit"></i> Edit page</a></li>
+                            </ul>
                         </li>
                         <li>
                             <a href="nw-pages/appearance.php">
                                 <i class="fa fa-eye"></i> <span>Appearance</span>
                             </a>
                         </li>
+                        <?php if(get_usermeta($user_ID, 'nw_user_level') == 'Administrator' || get_usermeta($user_ID, 'nw_user_level') ==  'Editor'):?>
                         <li>
                             <a href="nw-pages/users.php">
                                 <i class="fa fa-users"></i> <span>Users</span>
                             </a>
                         </li>
+                        <?php endif; ?>
                         <li>
                             <a href="nw-pages/settings.php">
                                 <i class="fa fa-cogs"></i> <span>Settings</span>

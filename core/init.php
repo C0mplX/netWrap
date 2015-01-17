@@ -59,6 +59,31 @@ function get_usermeta($user_ID, $meta_key){
 	return $display_usermeta;
 }
 
+/**********************
+*
+* Functions to check user_level clerence 
+*
+***********************/
+
+/**********************
+*
+* Functions that creates elements on the admin page and front end page. 
+*
+***********************/
+
+//Creates an copy of tinyMCEditor
+
+function add_editor($editor_id, $editor_name){
 
 
+	$create_editor  = '
+	<textarea rows="20" id="'.$editor_id.'" name="'.$editor_id.'"></textarea>
+		<iframe id="'.$editor_id.'" name="form_target" style="display:none"></iframe>
+		<form id="'.$editor_name.'" action="/upload/" target="'.$editor_id.'" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
+		    <input name="image" type="file" onchange="$("#'.$editor_name.'").submit();this.value="";">
+		</form>';
+
+	return $create_editor;
+}
 ?>
+		
