@@ -85,5 +85,64 @@ function add_editor($editor_id, $editor_name){
 
 	return $create_editor;
 }
+
+function add_metabox_top($header, $meta_with){
+
+	switch($meta_with){
+		case "tiny":
+			$set_meta_width = '3';
+		break;
+		case "small":
+			$set_meta_width = '4';
+		break;
+		case "medium":
+			$set_meta_width = '6';
+		break;
+		case "medium+":
+			$set_meta_width = '8';
+		break;
+		case "medium++":
+			$set_meta_width = '9';
+		break;
+		case "large":
+			$set_meta_width = '12';
+		break;
+	}
+
+	echo '<!-- row -->
+		
+			<div class="col-md-'.$set_meta_width.'">
+				<!-- jQuery Knob -->
+				<div class="box box-solid">
+					<div class="box-header">
+						<h3 class="box-title">'.$header.'</h3>
+						<div class="box-tools pull-right">
+							<button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+							<button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+						</div>
+					</div><!-- /.box-header -->
+					<div class="box-body">
+						<div class="row">';
+}
+
+function add_metabox_bottom(){
+
+	echo				'</div>
+					</div><!-- /.box-body -->
+				</div><!-- /.box -->
+			</div><!-- /.col -->';
+}
+
+
+/**********************
+*
+* Functions to add and retrive posts
+*
+***********************/
+
+function add_post($post_author, $post_content, $post_title, $post_status, $post_name, $post_url, $post_type){
+	global $dbHandler;
+}
+
 ?>
 		

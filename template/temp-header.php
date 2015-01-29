@@ -28,7 +28,7 @@ $user_ID = $_SESSION['id'];
     <body class="skin-blue">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="index.html" class="logo">
+            <a href="nw-main-admin.php" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 NetWrap Admin
             </a>
@@ -154,8 +154,8 @@ $user_ID = $_SESSION['id'];
                                 <i class="fa fa-pencil"></i> <span>Posts</span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="nw-pages/new-post.php"><i class="fa fa-plus"></i> New Poost</a></li>
-                                <li><a href="nw-pages/edit-post.php"><i class="fa fa-edit"></i> Edit posts</a></li>
+                                <li><a href="new-post.php"><i class="fa fa-plus"></i> New Poost</a></li>
+                                <li><a href="edit-post.php"><i class="fa fa-edit"></i> Edit posts</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -163,8 +163,8 @@ $user_ID = $_SESSION['id'];
                                 <i class="fa fa-camera"></i> <span>Media</span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="nw-pages/upload-media.php"><i class="fa fa-plus"></i> Upload images</a></li>
-                                <li><a href="nw-pages/edit-media.php"><i class="fa fa-edit"></i> Edit images</a></li>
+                                <li><a href="upload-media.php"><i class="fa fa-plus"></i> Upload images</a></li>
+                                <li><a href="edit-media.php"><i class="fa fa-edit"></i> Edit images</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -172,24 +172,29 @@ $user_ID = $_SESSION['id'];
                                 <i class="fa fa-file"></i> <span>Pages</span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="nw-pages/new-page.php"><i class="fa fa-plus"></i> New page</a></li>
-                                <li><a href="nw-pages/edit-page.php"><i class="fa fa-edit"></i> Edit page</a></li>
+                                <li><a href="new-page.php"><i class="fa fa-plus"></i> New page</a></li>
+                                <li><a href="edit-page.php"><i class="fa fa-edit"></i> Edit page</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="nw-pages/appearance.php">
+                            <a href="menu.php">
+                                <i class="fa fa-list"></i> <span>menus</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="appearance.php">
                                 <i class="fa fa-eye"></i> <span>Appearance</span>
                             </a>
                         </li>
-                        <?php if(get_usermeta($user_ID, 'nw_user_level') == 'Administrator' || get_usermeta($user_ID, 'nw_user_level') ==  'Editor'):?>
+                        <?php if(get_usermeta($user_ID, 'nw_user_level') == 'Administrator'):?>
                         <li>
-                            <a href="nw-pages/users.php">
+                            <a href="users.php">
                                 <i class="fa fa-users"></i> <span>Users</span>
                             </a>
                         </li>
                         <?php endif; ?>
                         <li>
-                            <a href="nw-pages/settings.php">
+                            <a href="settings.php">
                                 <i class="fa fa-cogs"></i> <span>Settings</span>
                             </a>
                         </li>

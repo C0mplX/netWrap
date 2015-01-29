@@ -263,6 +263,33 @@ class DbHandler{
 		}
 	}
 
+	/**
+	* Insert new posts
+	*/
+
+	public function insert_post($post_author, $post_content, $post_title, $post_status, $post_name, $post_url, $post_type){
+		//constand variables
+		$post_date = date('y.m.d h:m:s');
+		$post_type = 'post';
+
+		$query = $this->db->prepare("INSERT INTO `nw_posts` (post_author,post_date,post_content,post_title,post_status,post_url,post_type) VALUES (?,?,?,?,?,?,?)");
+		$query->bindValue(1, $post_author);
+		$query->bindValue(2, $post_date);
+		$query->bindValue(3, $post_content);
+		$query->bindValue(4, $post_title);
+		$query->bindValue(5, $post_status);
+		$query->bindValue(6, $post_url);
+		$query->bindValue(7, $post_type);
+
+		try{
+			$query->execute();
+
+			return true;
+		}catch(PDOException $e){
+				die($e->getMessage());
+		}
+	}
+
 
 	/***************
 	*

@@ -4,31 +4,31 @@ Functions:
 
 <!--get_user function-->
 
-The get_user() function retrives the display Name from the nw_users table.
+The get_user() function retrieves the display Name from the nw_users table.
 
 EXAMPLE:
 
 <?php echo get_user($user_ID);?>
-the example over wil display somthing like this: John Doe.
+the example over will display something like this: John Doe.
 
 
 <!--get_usermeta function-->
 
-The get_usermeta() function retrives the meta_value from the nw_usermeta table. 
+The get_usermeta() function retrieves the meta_value from the nw_usermeta table. 
 
 Pass the following values into the function: get_usermeta('user_id', 'meta_key').
 
 EXAMPLE: 
 
 <?php echo get_usermeta($user_ID, 'nw_user_level');?>
-The example above wil return the user level of the user id you pass into the function. 
+The example above will return the user level of the user id you pass into the function. 
 
 There are three levels in Netwrap. 
 	- Administrator = userlevel 3
 	- Editor 	= userlevel 2
 	- Poster 	= userlevel 1
 
-You can change the seccound parameter to match the meta_key you want to retrive
+You can change the second parameter to match the meta_key you want to retrieve
 	Meta keys are: 
 	- nw_user_level = userlevel
 	- 
@@ -50,5 +50,22 @@ EXAMPLE:
 
 <?php echo add_editor('my_editor_id', 'my_editor_name');?>
 
-The exsample above will out put a TinyMCEditor with the id 'editor_id', and form control name 'editor_name'. 
-To get the output of the form simply call the for with javascript on the editor_id you selected, or by calling it with $_POST['editor_id']. 
+The example above will output a TinyMCEditor with the id 'editor_id', and form control name 'editor_name'. 
+To get the output of the form simply call the for with JavaScript on the editor_id you selected, or by calling it with $_POST['editor_id'].
+
+<!--add_metabox_top()-->
+
+The add_metabox_top adds the top of the metabox. This function can take two arguments. 
+add_metabox_top($header_title, $metabox_size). 
+
+The first argument is the header title of the metabox, the secound argument is the size. 
+There are six sizes: tiney, small, medium, medium+, medium++, large. 
+
+!IMPORTANT - In order for the metabox to show you also need to add add_metabox_bottom() function. 
+
+EXAMPLE: 
+
+<?php add_metabox_top('my metabox', 'large');?>
+	//The content of the metabo goes here. 
+	This can be any html code, javascript or php code. 
+<?php add_metabox_bottom();?> 
