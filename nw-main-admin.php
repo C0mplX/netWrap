@@ -15,15 +15,15 @@ require('template/temp-header.php');
 			<?php add_metabox_top('Welcome to NetWrap', 'large');?>
 				<div class="col-sm-4">
 					<h4>Get Started</h4>
-					<a href="nw-pages/new-page.php"><input type="submit" class="btn btn-primary" value="Add Page"/></a>
+					<a href="new-page.php"><input type="submit" class="btn btn-primary" value="Add Page"/></a>
 				</div>
 				<div class="col-sm-4">
 					<h4>Next Step</h4>
-					<a href="nw-pages/new-post.php"><input type="submit" class="btn btn-primary" value="Add Post"/></a>
+					<a href="new-post.php"><input type="submit" class="btn btn-primary" value="Add Post"/></a>
 				</div>
 				<div class="col-sm-4">
 					<h4>More actions</h4>
-					<p>Manage <a href="nw-pages/settings.php">Settings</a> or <a href="wp-pages/menus.php">Menus</a></p>
+					<p>Manage <a href="settings.php">Settings</a> or <a href="wp-pages/menus.php">Menus</a></p>
 				</div>
 			<?php add_metabox_bottom('Get started');?>
 			<!--/END welcome box-->

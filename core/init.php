@@ -144,5 +144,39 @@ function add_post($post_author, $post_content, $post_title, $post_status, $post_
 	global $dbHandler;
 }
 
+/**********************
+*
+* Functions to add and retrive categories
+*
+***********************/
+function get_post_category(){
+	global $dbHandler;
+
+	$get_cat = $dbHandler->get_all_cat();
+
+	if($get_cat != ""){
+		echo '<select id="nw_category_get_post_page" name"nw_category_get_post_page" class="form-control">';
+		echo '<option name="blank_cat" value="Uncategorized" >Uncategorized</option>';
+		foreach ($get_cat as $category) {
+		echo '<option name="'.$category['meta_id'].' value="'.$category['meta_value'].'">'.$category['meta_value'].'</option>';	
+		}
+		echo '</select></br>';
+		echo '<input type="text" id="nw_brand_new_post_cat" class="form-control" name="nw_brand_new_post_cat" placeholder="Add new category" />';
+	}
+}
+
+function add_new_post_category($postID, $category_name){
+	global $dbHandler;
+
+	$insert_new_cat = $dbHandler->insert_post_category($postID, $category_name);
+
+	if($insert_new_cat === true){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+
 ?>
 		

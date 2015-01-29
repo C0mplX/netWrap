@@ -290,6 +290,46 @@ class DbHandler{
 		}
 	}
 
+	/**
+	* Get all categories
+	*/
+	public function get_all_cat(){
+
+		$value = 'post_category';
+
+		$query = $this->db->prepare("SELECT * FROM `nw_postmeta` WHERE `meta_key` = ?");
+		$query-> bindValue(1, $value);
+
+		try{
+			$query->execute();
+			$data = $query->fetchAll();
+
+			return $data;
+		}catch(PDOException $e){
+			die($e ->getMessage());
+		}
+	}
+
+	/**
+	* Insert new post category
+	*/
+	public function insert_post_category($postID, $category_name){
+
+		$meta_key = 'post_category';
+
+		$query = $this->db->prepare("INSERT INTO `nw_postmeta` (post_id,meta_key,meta_value) VALUES (?,?,?)");
+		$query-> bindValue(1, $postID);
+		$query-> bindValue(2, $meta_key);
+		$query-> bindValue(3, $meta_value);
+
+		try{
+			$query->execute();
+			return true;
+		}catch(PDOException $e){
+			die($e ->getMessage());
+		}
+	}
+
 
 	/***************
 	*
