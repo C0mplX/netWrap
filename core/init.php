@@ -74,11 +74,9 @@ function get_usermeta($user_ID, $meta_key){
 
 //Creates an copy of tinyMCEditor
 
-function add_editor($editor_id, $editor_name){
-
-
+function add_editor($editor_id, $editor_name, $value){
 	$create_editor  = '
-	<textarea rows="20" id="'.$editor_id.'" name="'.$editor_id.'"></textarea>
+	<textarea rows="20" id="'.$editor_id.'" name="'.$editor_id.'">'.htmlentities($value).'	</textarea>
 		<iframe id="'.$editor_id.'" name="form_target" style="display:none"></iframe>
 		    <input name="image" type="file" style="display: none;" onchange="$("#'.$editor_name.'").submit();this.value="";">
 		';
@@ -152,9 +150,9 @@ if(isset($_POST['save_post'])){
 	global $user_ID;
 	//Gather all the variables and sanatize them. 
 	$post_title 	= trim($_POST['nw_title_post']);
-	$post_content	= trim($_POST['nw_post_editor']);
+	$post_content	= stripcslashes($_POST['nw_post_editor']);
 	$post_author	= get_user($user_ID);
-	$post_status 	= 'publish';
+	$post_status 	= 'published';
 	$post_type		= 'post';
 	$post_name		= str_replace(' ', '-', $post_title);
 	$post_url		= $post_name . $dbHandler->check_post_number($post_title);
@@ -178,12 +176,112 @@ if(isset($_POST['save_post'])){
 	}
 }
 
-/**
-* Get post by id
-*/
-function get_post_info($post_ID){
+if(isset($_POST['update_post'])){
+	global $dbHandler;
+	global $user_ID;
+	//Gather all the variables and sanatize them. 
+	$post_title 	= trim($_POST['nw_title_post_edit']);
+	$post_content	= stripcslashes($_POST['nw_post_editor_edit']);
+	$post_author	= get_user($user_ID);
+	$post_name		= str_replace(' ', '-', $post_title);
+	$post_ID 		= $_GET['post'];
 
+
+	if($post_title != "" && $post_content != ""){
+
+		$add_post = $dbHandler->update_post($post_author, $post_content, $post_title, $post_name, $post_ID);
+
+			/*
+			if($_POST['nw_brand_new_post_cat'] != "") {
+				$category_name = trim($_POST['nw_brand_new_post_cat']);
+			}else{
+				$category_name 	= trim($_POST['nw_category_get_post_page']);
+			}
+			add_new_post_category($add_post, $category_name);
+			*/
+			header('Location: edit-post.php?post='.$post_ID  );
+	}
+	else{
+
+	}
 }
+
+/**
+* Get post content
+*/
+
+//Get the title
+function get_the_title($post_ID){
+	global $dbHandler;
+
+	$get_post_data = $dbHandler->get_post_by_id($post_ID);
+
+	echo $get_post_data['post_title'];
+}
+
+//Get post content
+function get_the_content($post_ID){
+	global $dbHandler;
+	$get_post_data = $dbHandler->get_post_by_id($post_ID);
+
+	return $get_post_data['post_content'];
+}
+
+function get_post_status($post_ID){
+	global $dbHandler;
+	$get_post_data = $dbHandler->get_post_by_id($post_ID);
+
+	echo $get_post_data['post_status'];
+}
+
+/**
+* Get the all the posts
+*/
+function get_all_posts(){
+	global $dbHandler;
+	$get_all_posts = $dbHandler->get_all_posts();
+	echo'
+	<div class="box-body table-responsive">
+        <table id="example2" class="table table-bordered table-hover">
+            <thead>
+	            <tr>
+	                <th>Title</th>
+	                <th>Author</th>
+	                <th>date</th>
+	                <th>Edit</th>
+	            </tr>
+            </thead>
+        <tbody>';
+	foreach ($get_all_posts as $posts) {
+		if($posts['post_modified'] == "0000-00-00"){
+			$post_date = $posts['post_date'];
+		}else{
+			$post_date = $posts['post_modified'];
+		}
+		echo '<tr>
+			<td>'.$posts['post_title'].'</td>
+			<td>'.$posts['post_author'].'</td>
+			<td>'.$post_date.' '.$posts['post_status'].'</td>
+			<td><a href="edit-post.php?post='.$posts['ID'].'"<button class="btn btn-primary">Edit</button></td>
+		</tr>
+		';
+	}
+
+	echo '</tbody>
+			<tfoot>
+				<tr>
+				<th>Title</th>
+				<th>Author</th>
+				<th>date</th>
+				<th>Edit</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+		';
+}
+
+
 
 /**********************
 *

@@ -309,6 +309,28 @@ class DbHandler{
 		}
 	}
 
+	/**
+	* Update post
+	*/
+	public function update_post($post_author, $post_content, $post_title, $post_name, $post_id){
+		//constand variables
+		$post_date = date('y.m.d h:m:s');
+
+		$query = $this->db->prepare("UPDATE `nw_posts` SET `post_author` = ?, `post_content` = ?, `post_title` = ?, `post_name` = ? WHERE `ID` = ?");
+		$query->bindValue(1, $post_author);
+		$query->bindValue(2, $post_content);
+		$query->bindValue(3, $post_title);
+		$query->bindValue(4, $post_name);
+		$query->bindValue(5, $post_id);
+
+		try{
+			$query->execute();
+
+		}catch(PDOException $e){
+				die($e->getMessage());
+		}
+	}
+
 	public function get_post_by_id($post_id){
 		$query = $this->db->prepare("SELECT * FROM `nw_posts` where `ID` = ?");
 		$query->bindValue(1, $post_id);
@@ -316,6 +338,20 @@ class DbHandler{
 		try{
 			$query->execute();
 			$data = $query->fetch();
+
+			return $data;
+
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+	}
+
+	public function get_all_posts(){
+		$query = $this->db->prepare("SELECT * FROM `nw_posts`");
+
+		try{
+			$query->execute();
+			$data = $query->fetchAll();
 
 			return $data;
 
