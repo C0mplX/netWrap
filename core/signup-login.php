@@ -42,6 +42,7 @@ function setup_admin_user_first(){
 		$dbHandler->instal_nw_posts_table();
 		$dbHandler->instal_nw_postmeta_table();
 		$dbHandler->instal_nw_options();
+		$dbHandler->instal_nw_taxonomy();
 
 		//registrer det first admin user
 		$dbHandler->register($display_name, $user_login, $user_email, $user_pass);

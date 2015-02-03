@@ -91,7 +91,7 @@ class DbHandler{
 		     $this->db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );//Error Handling
 		     $sql ="CREATE table $table(
 		     ID INT( 11 ) AUTO_INCREMENT PRIMARY KEY,
-		     post_author INT( 11 ) NOT NULL, 
+		     post_author varchar( 250 ) NOT NULL, 
 		     post_date DATETIME NOT NULL,
 		     post_content LONGTEXT NOT NULL,
 		     post_title varchar( 250 ) NOT NULL,
@@ -141,7 +141,23 @@ class DbHandler{
 		} catch(PDOException $e) {
 		    die($e->getMessage());//Remove or change message in production code
 		}
+	}
 
+	public function instal_nw_taxonomy(){
+		$table = "nw_taxonomy";
+		try {
+		     $this->db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );//Error Handling
+		     $sql ="CREATE table $table(
+		     taxonomy_id INT( 11 ) AUTO_INCREMENT PRIMARY KEY,
+		     term_id int( 11 ) NOT NULL, 
+		     taxonomy varchar( 250 ) NOT NULL,
+		     taxonomy_value TINYTEXT NOT NULL);" ;
+		     
+		     $this->db->exec($sql);
+
+		} catch(PDOException $e) {
+		    die($e->getMessage());//Remove or change message in production code
+		}
 	}
 
 
@@ -272,21 +288,78 @@ class DbHandler{
 		$post_date = date('y.m.d h:m:s');
 		$post_type = 'post';
 
-		$query = $this->db->prepare("INSERT INTO `nw_posts` (post_author,post_date,post_content,post_title,post_status,post_url,post_type) VALUES (?,?,?,?,?,?,?)");
+		$query = $this->db->prepare("INSERT INTO `nw_posts` (post_author,post_date,post_content,post_title,post_status,post_name,post_url,post_type) VALUES (?,?,?,?,?,?,?,?)");
 		$query->bindValue(1, $post_author);
 		$query->bindValue(2, $post_date);
 		$query->bindValue(3, $post_content);
 		$query->bindValue(4, $post_title);
 		$query->bindValue(5, $post_status);
-		$query->bindValue(6, $post_url);
-		$query->bindValue(7, $post_type);
+		$query->bindValue(6, $post_name);
+		$query->bindValue(7, $post_url);
+		$query->bindValue(8, $post_type);
 
 		try{
 			$query->execute();
 
-			return true;
+			$post_id = $this->get_post_id_from_category($post_url);
+			return $post_id;
+
 		}catch(PDOException $e){
 				die($e->getMessage());
+		}
+	}
+
+	public function get_post_by_id($post_id){
+		$query = $this->db->prepare("SELECT * FROM `nw_posts` where `ID` = ?");
+		$query->bindValue(1, $post_id);
+
+		try{
+			$query->execute();
+			$data = $query->fetch();
+
+			return $data;
+
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+	}
+
+	private function get_post_id_from_category($post_url){
+		$query = $this->db->prepare("SELECT * FROM `nw_posts` WHERE `post_url` = ?");
+		$query->bindValue(1, $post_url);
+
+		try{
+			$query->execute();
+			$data = $query->fetch();
+			$post_id = $data['ID'];
+
+			return $post_id;
+
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+	}
+
+	/**
+	*Check post number
+	*/
+
+	public function check_post_number(){
+		$query = $this->db->prepare("SELECT count(`ID`) FROM `nw_posts`");
+
+		try{
+			$query->execute();
+			$rows = $query->fetchColumn();
+
+			if($rows == 0){
+				return 0;
+			}else{
+				return $rows;
+			}
+			
+
+		}catch(PDOException $e){
+			die($e->getMessage());
 		}
 	}
 
@@ -295,9 +368,9 @@ class DbHandler{
 	*/
 	public function get_all_cat(){
 
-		$value = 'post_category';
+		$value = 'category';
 
-		$query = $this->db->prepare("SELECT * FROM `nw_postmeta` WHERE `meta_key` = ?");
+		$query = $this->db->prepare("SELECT * FROM `nw_taxonomy` WHERE `taxonomy` = ?");
 		$query-> bindValue(1, $value);
 
 		try{
@@ -305,6 +378,30 @@ class DbHandler{
 			$data = $query->fetchAll();
 
 			return $data;
+		}catch(PDOException $e){
+			die($e ->getMessage());
+		}
+	}
+
+
+	/**
+	* Check if category allready is inserted into taxonomy value, if not insert it. 
+	*/
+	private function check_category_taxonomy($category_name){
+		$query = $this->db->prepare("SELECT count(`taxonomy_id`) FROM `nw_taxonomy` WHERE `taxonomy_value` = ?");
+		$query->bindValue(1, $category_name);
+
+		try{
+			$query->execute();
+			$rows = $query->fetchColumn();
+
+			if($rows == 0){
+				return true;
+			}else if($rows >= 1){
+				
+				return false;
+			}
+
 		}catch(PDOException $e){
 			die($e ->getMessage());
 		}
@@ -320,11 +417,32 @@ class DbHandler{
 		$query = $this->db->prepare("INSERT INTO `nw_postmeta` (post_id,meta_key,meta_value) VALUES (?,?,?)");
 		$query-> bindValue(1, $postID);
 		$query-> bindValue(2, $meta_key);
-		$query-> bindValue(3, $meta_value);
+		$query-> bindValue(3, $category_name);
 
 		try{
 			$query->execute();
+			$check = $this->check_category_taxonomy($category_name);
+			if($check === true){
+				$this->insert_taxonomy_category($postID, $category_name);
+			}else if($check === false){
+				
+			}
+
 			return true;
+		}catch(PDOException $e){
+			die($e ->getMessage());
+		}
+	}
+
+	private function insert_taxonomy_category($postID, $category_name){
+		$query = $this->db->prepare("INSERT INTO `nw_taxonomy` (term_id, taxonomy, taxonomy_value) VALUES (?,?,?)");
+		$query->bindValue(1, $postID);
+		$query->bindValue(2, 'category');
+		$query->bindValue(3, $category_name);
+
+		try{
+			$query->execute();
+
 		}catch(PDOException $e){
 			die($e ->getMessage());
 		}

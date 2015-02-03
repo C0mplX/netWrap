@@ -53,6 +53,19 @@ EXAMPLE:
 The example above will output a TinyMCEditor with the id 'editor_id', and form control name 'editor_name'. 
 To get the output of the form simply call the for with JavaScript on the editor_id you selected, or by calling it with $_POST['editor_id'].
 
+<!-- add_form_start()-->
+
+The add_form_start is simply a function to start a form around an editor. This function is only used when a add_editor function is used. 
+
+EXAMPLE: 
+
+<?php add_form_start('same_id_as_editor', 'same_name_as_editor'); ?>
+// and here you start the editor. 
+<?php echo add_editor('editor_id', 'editor_name');?>
+
+PS:  Remember to close the form of at the end. Use the standar </form> tag. 
+
+
 <!--add_metabox_top()-->
 
 The add_metabox_top adds the top of the metabox. This function can take two arguments. 

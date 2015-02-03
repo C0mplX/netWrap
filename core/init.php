@@ -8,6 +8,7 @@ require 'classes/DbHandler.php';
 $dbHandler		= new DbHandler($db);
 $general  		= new General();
 $errors			= array();
+$user_ID 		= $_SESSION['id']; 
 
 
 /***********************
@@ -79,11 +80,14 @@ function add_editor($editor_id, $editor_name){
 	$create_editor  = '
 	<textarea rows="20" id="'.$editor_id.'" name="'.$editor_id.'"></textarea>
 		<iframe id="'.$editor_id.'" name="form_target" style="display:none"></iframe>
-		<form id="'.$editor_name.'" action="/upload/" target="'.$editor_id.'" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
-		    <input name="image" type="file" onchange="$("#'.$editor_name.'").submit();this.value="";">
-		</form>';
+		    <input name="image" type="file" style="display: none;" onchange="$("#'.$editor_name.'").submit();this.value="";">
+		';
 
 	return $create_editor;
+}
+
+function add_form_start($editor_id, $editor_name){
+	echo '<form id="'.$editor_name.'" action="" target="'.$editor_id.'" method="post" enctype="multipart/form-data">';
 }
 
 function add_metabox_top($header, $meta_with){
@@ -140,8 +144,45 @@ function add_metabox_bottom(){
 *
 ***********************/
 
-function add_post($post_author, $post_content, $post_title, $post_status, $post_name, $post_url, $post_type){
+//PUBLISH: Take the data from all the form fields and pass it to add_post.  
+
+if(isset($_POST['save_post'])){
+
 	global $dbHandler;
+	global $user_ID;
+	//Gather all the variables and sanatize them. 
+	$post_title 	= trim($_POST['nw_title_post']);
+	$post_content	= trim($_POST['nw_post_editor']);
+	$post_author	= get_user($user_ID);
+	$post_status 	= 'publish';
+	$post_type		= 'post';
+	$post_name		= str_replace(' ', '-', $post_title);
+	$post_url		= $post_name . $dbHandler->check_post_number($post_title);
+
+
+	if($post_title != "" && $post_content != ""){
+
+		$add_post = $dbHandler->insert_post($post_author, $post_content, $post_title, $post_status, $post_name, $post_url, $post_type);
+
+			if($_POST['nw_brand_new_post_cat'] != "") {
+				$category_name = trim($_POST['nw_brand_new_post_cat']);
+			}else{
+				$category_name 	= trim($_POST['nw_category_get_post_page']);
+			}
+			add_new_post_category($add_post, $category_name);
+
+			header('Location: edit-post.php?post='.$add_post  );
+	}
+	else{
+
+	}
+}
+
+/**
+* Get post by id
+*/
+function get_post_info($post_ID){
+
 }
 
 /**********************
@@ -155,10 +196,10 @@ function get_post_category(){
 	$get_cat = $dbHandler->get_all_cat();
 
 	if($get_cat != ""){
-		echo '<select id="nw_category_get_post_page" name"nw_category_get_post_page" class="form-control">';
+		echo '<select id="nw_category_get_post_page" name="nw_category_get_post_page" class="form-control">';
 		echo '<option name="blank_cat" value="Uncategorized" >Uncategorized</option>';
 		foreach ($get_cat as $category) {
-		echo '<option name="'.$category['meta_id'].' value="'.$category['meta_value'].'">'.$category['meta_value'].'</option>';	
+		echo '<option name="'.$category['taxonomy'].'" value="'.$category['taxonomy_value'].'">'.$category['taxonomy_value'].'</option>';	
 		}
 		echo '</select></br>';
 		echo '<input type="text" id="nw_brand_new_post_cat" class="form-control" name="nw_brand_new_post_cat" placeholder="Add new category" />';

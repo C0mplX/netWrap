@@ -12,8 +12,10 @@ require('template/temp-header.php');
 	<section class="content">
 		<div class="row">
 			<div class="col-md-9">
-					<!--The mian input box, and text field-->
+				<div id="error_msg"></div>
+					<!--The main input box, and text field-->
 					<?php add_metabox_top('New post', 'large')?>
+					<?php add_form_start('nw_post_editor', 'nw_post_editor_name');?>
 						<div class="col-md-12">
 							<input type"text" id="nw_title_post" name="nw_title_post" class="form-control" placeholder="Enter title here"/></br>
 							<?php echo add_editor('nw_post_editor', 'nw_post_editor_name')?>
@@ -30,9 +32,6 @@ require('template/temp-header.php');
 							<div class"text-left">
 								<input type="submit" id="save_draft" name="save_draft" class="btn btn-default" value="Save Draft" /> 
 							</div>
-						</br>
-							<i class="fa fa-circle"></i> <b>Status: </b> default draft
-							
 							<div class="text-right">
 								<input type="submit" id="save_post" name="save_post" class="btn btn-primary" value="Publish" /> 
 							</div>
@@ -48,6 +47,7 @@ require('template/temp-header.php');
 						</div>
 						
 					<?php add_metabox_bottom();?>
+				</form>
 			<!--/END The publish box-->
 			</div>
 		</div><!-- /.row -->
