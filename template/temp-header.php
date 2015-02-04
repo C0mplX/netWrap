@@ -102,10 +102,10 @@ $user_ID = $_SESSION['id'];
                                 <!-- Menu Body -->
                                 <li class="user-body">
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">Options</a>
+                                        <a href="nw_settings.php">settings</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <a href="nw_codec.text">Codec</a>
+                                        <a href="nw_codec.text" target="_blank">Codec</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
                                         <a href="#"></a>
@@ -143,7 +143,7 @@ $user_ID = $_SESSION['id'];
                     </div>
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="active">
+                        <li class="">
                             <a href="nw-main-admin.php">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>

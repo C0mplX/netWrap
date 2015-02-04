@@ -12,6 +12,7 @@
         <script src="js/functions/signout.js"></script>
         <!-- TinyMCE 4.x -->
 		<script type="text/javascript" src="core/editor/tinymce/tinymce.min.js"></script>
+		<script type="text/javascript" src="js/functions/admin-functions.js"></script>
 		<script type="text/javascript">
 		 
 		tinymce.init({

@@ -4,7 +4,7 @@ require('template/temp-header.php');
 
 <section class="content-header">
 	<h1>
-		New Post	
+		New Page
 	</h1>
 </section>
 
@@ -13,11 +13,11 @@ require('template/temp-header.php');
 		<div class="row">
 			<div class="col-md-9">
 					<!--The main input box, and text field-->
-					<?php add_metabox_top('Add new post', 'large')?>
-					<?php add_form_start('nw_post_editor', 'nw_post_editor_name');?>
+					<?php add_metabox_top('Add new page', 'large')?>
+					<?php add_form_start('nw_page_editor', 'nw_page_editor_name');?>
 						<div class="col-md-12">
-							<input type"text" id="nw_title_post" name="nw_title_post" class="form-control" placeholder="Enter title here"/></br>
-							<?php echo add_editor('nw_post_editor', 'nw_post_editor_name', '')?>
+							<input type"text" id="nw_title_post" name="nw_title_page" class="form-control" placeholder="Enter title here"/></br>
+							<?php echo add_editor('nw_page_editor', 'nw_page_editor_name', '')?>
 						</div>
 						
 					<?php add_metabox_bottom()?>
@@ -29,20 +29,19 @@ require('template/temp-header.php');
 					<?php add_metabox_top('Publish', 'large')?>
 						<div class="col-md-12">
 							<div class="col-md-6 text-left">
-								<input type="submit" id="save_draft" name="save_draft" class="btn btn-default" value="Save Draft" /> 
+								<input type="submit" id="save_draft_page" name="save_draft_page" class="btn btn-default" value="Save Draft" /> 
 							</div>
 							<div class="col-md-6 text-right">
-								<input type="submit" id="save_post" name="save_post" class="btn btn-primary" value="Publish" /> 
+								<input type="submit" id="save_page" name="save_page" class="btn btn-primary" value="Publish" /> 
 							</div>
 						</div>
 					<?php add_metabox_bottom();?>
 					<!--/END The publish box-->
 
 					<!--The category box-->
-					<?php add_metabox_top('Category', 'large')?>
+					<?php add_metabox_top('Template', 'large')?>
 						<div class="col-md-12">
-							<?php get_post_category();?>
-							
+							<?php get_page_template();?>
 						</div>
 						
 					<?php add_metabox_bottom();?>
