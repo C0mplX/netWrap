@@ -58,7 +58,7 @@ $post_ID = @$_GET['page'];
 							<!--/END The publish box-->
 
 							<!--The category box-->
-							<?php add_metabox_top('Category', 'large')?>
+							<?php add_metabox_top('Template', 'large')?>
 								<div class="col-md-12">
 									<?php get_page_template_edit($post_ID);?>
 									
