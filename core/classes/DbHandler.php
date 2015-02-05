@@ -368,7 +368,7 @@ class DbHandler{
 	}
 
 	public function get_all_posts($post_type){
-		$query = $this->db->prepare("SELECT * FROM `nw_posts` WHERE `post_type` = ?");
+		$query = $this->db->prepare("SELECT * FROM `nw_posts` WHERE `post_type` = ? ORDER BY `post_date` DESC");
 		$query->bindValue(1, $post_type);
 
 		try{
